@@ -13,7 +13,7 @@ some markdown text
 It also automatically transforms your snippets into code, all you need to do is type:
 
 ```
-`` ```jsx live
+ ```jsx live
 function MyComponent(){
   return <p>hello world</p>
 }
