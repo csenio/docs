@@ -19,15 +19,15 @@ function MyComponent(){
 }
 
 render(<MyComponent>)
-`` ```
+ ```
 ```
 
 the \*live** flag will automatically transform your snipper into a live component. If you just want to render something (whithout declaring variables or so) you can also add the **inline\*\* flag like this:
 
 ```
-\`\`\`jsx live inline
+ ```jsx live inline
 <MyComponent>
-\`\`\`
+ ```
 ```
 
 # Contribute
