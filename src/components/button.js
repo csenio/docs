@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export default styled.button`
   border: none;
@@ -10,4 +10,4 @@ export default styled.button`
   font-weight: bold;
   border-radius: 4px;
   padding: 16px;
-`;
+`

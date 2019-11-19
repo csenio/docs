@@ -1,27 +1,17 @@
-# Gatsby Starter MDX Basic
+# Ams Docs
 
-View this starter [live on Netlify](https://gatsby-starter-mdx-basic.netlify.com/)
+This uses mdx (markdown extended). It let's you do stuff like
 
-This starter build MDX support into the
-[gatsby-default-starter](https://github.com/gatsbyjs/gatsby-starter-default). Its
-README also applies here.
+```
+# Some markdown title
 
-1. Create a new Gatsby site using this starter
+some markdown text
 
-```sh
-gatsby new my-site https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
+<Button>boom, jsx in markdown</Button>
 ```
 
-2. Install dependencies
+# Contribute
 
-```sh
-yarn
-```
-
-3. Run the develop script
-
-```sh
-yarn develop
-```
-
-4. Edit Page 2 in `src/pages/page-2.mdx`
+1. Create a `.mdx` file in the pages directory, it will automatically create a route under /your-filename
+2. Write your content, you can check the `select.mdx` file to see an example
+3. add a new link to your page to the `components/layout.js` file
