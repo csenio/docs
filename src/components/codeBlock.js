@@ -7,11 +7,10 @@ import useClipboard from "../hooks/useClipboard";
 
 export const liveEditorStyle = {
   fontSize: 14,
-  marginBottom: 32,
-  marginTop: 32,
   overflowX: "auto",
   fontFamily: "Menlo,monospace",
-  borderRadius: 10
+  borderRadius: 10,
+  outline: "none"
 };
 
 export const liveErrorStyle = {
@@ -33,6 +32,9 @@ const LivePreviewStyles = styled.div`
 
 const LiveEditorWrapper = styled.div`
   position: relative;
+  margin: 32px 0;
+  border-radius: 10px;
+  background: rgb(1, 22, 39);
 `;
 
 const CopyButton = styled.button`
@@ -47,68 +49,70 @@ const CopyButton = styled.button`
   font-weight: 600;
 `;
 
-function LiveSnippet({ children }) {
+const LiveEditorText = styled.div`
+  color: #ccc;
+  user-select: none;
+  font-weight: 600;
+  font-size: 12px;
+  display: block;
+  user-select: none;
+  text-align: center;
+  text-transform: uppercase;
+  padding-top: 8px;
+`;
+
+export default function LiveSnippet({ children }) {
   const [editorCode, setEditorCode] = useState(children.props.children.trim());
 
   const { onCopy, hasCopied } = useClipboard(editorCode);
 
   const handleCodeChange = newCode => setEditorCode(newCode.trim());
 
-  return (
-    <LiveProvider
-      theme={darkTheme}
-      noInline={!children.props.inline}
-      scope={{ styled }}
-      code={editorCode}
-    >
-      <LivePreview Component={LivePreviewStyles} />
+  if (children.props.live) {
+    return (
+      <LiveProvider
+        theme={darkTheme}
+        noInline={!children.props.inline}
+        scope={{ styled }}
+        code={editorCode}
+      >
+        <LivePreview Component={LivePreviewStyles} />
 
-      <LiveEditorWrapper>
-        <LiveEditor
-          onChange={handleCodeChange}
-          padding={20}
-          style={liveEditorStyle}
-        />
-        <CopyButton onClick={onCopy}>
-          {hasCopied ? "copied" : "copy"}
-        </CopyButton>
-      </LiveEditorWrapper>
+        <LiveEditorWrapper>
+          <LiveEditorText>editable example</LiveEditorText>
+          <LiveEditor
+            onChange={handleCodeChange}
+            padding={20}
+            style={liveEditorStyle}
+          />
+          <CopyButton onClick={onCopy}>
+            {hasCopied ? "copied" : "copy"}
+          </CopyButton>
+        </LiveEditorWrapper>
 
-      <LiveError style={liveErrorStyle} />
-    </LiveProvider>
-  );
-}
-
-const SyntaxHighlighter = ({ children }) => {
-  const className = children.props.className || "language-jsx";
-  const language = className.split("-")[1];
-
-  return (
-    <Highlight
-      {...defaultProps}
-      theme={darkTheme}
-      code={children.props.children.trim()}
-      language={language || "jsx"}
-    >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={style}>
-          {tokens.map((line, i) => (
-            <div {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span {...getTokenProps({ token, key })} />
-              ))}
-            </div>
-          ))}
-        </pre>
-      )}
-    </Highlight>
-  );
-};
-
-export default function CodeBlock(props) {
-  if (props.children.props.live) {
-    return <LiveSnippet {...props} />;
+        <LiveError style={liveErrorStyle} />
+      </LiveProvider>
+    );
   } else {
-    return <SyntaxHighlighter {...props} />;
+    return (
+      <LiveProvider
+        disabled
+        theme={darkTheme}
+        noInline={!children.props.inline}
+        scope={{ styled }}
+        code={editorCode}
+      >
+        <LiveEditorWrapper>
+          <LiveEditor
+            onChange={handleCodeChange}
+            padding={20}
+            style={liveEditorStyle}
+          />
+          <CopyButton onClick={onCopy}>
+            {hasCopied ? "copied" : "copy"}
+          </CopyButton>
+        </LiveEditorWrapper>
+      </LiveProvider>
+    );
   }
 }

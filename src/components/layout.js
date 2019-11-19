@@ -7,13 +7,14 @@ const Page = styled.div`
   width: 100%;
 `;
 
-const SideBar = styled.nav`
+const SideNav = styled.nav`
   width: 300px;
   height: 100vh;
-  background: red;
   position: fixed;
   left: 0;
   top: 0;
+  border-right: 1px solid rgb(226, 232, 240);
+  padding: 24px;
 `;
 
 const Content = styled.div`
@@ -23,11 +24,31 @@ const Content = styled.div`
   display: inline-block;
 `;
 
+const NavLink = styled(Link).attrs({
+  activeClassName: "active"
+})`
+  font-size: 14px;
+  color: rgb(45, 55, 72);
+
+  &:hover {
+    transform: translate3d(0, 5px, 0);
+  }
+  &.active {
+    font-weight: bold;
+  }
+  transition: transform 0.2s;
+`;
+
+const NavTitle = styled.h2`
+  font-weight: bold;
+  color: #444;
+`;
+
 const Layout = ({ children }) => (
   <Page>
-    <SideBar>
-      <Link to="/getting-started">Getting Started</Link>
-    </SideBar>
+    <SideNav>
+      <NavLink to="/getting-started">Getting Started</NavLink>
+    </SideNav>
     <Content>{children}</Content>
   </Page>
 );
